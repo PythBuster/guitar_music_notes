@@ -3,7 +3,7 @@ import sys
 from PySide6.QtWidgets import QApplication
 
 from config import IMAGES_PATH, LOAD_IMAGE_TIMER_IN_MS
-from notes_viewer.viewer import Viewer
+from src.view.viewer import Viewer
 
 app = QApplication(sys.argv)
 

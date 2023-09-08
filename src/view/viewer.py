@@ -21,6 +21,8 @@ class Viewer(QWidget):
         self.setLayout(vbox)
 
         if self.image_load_timer_in_ms is not None:
+            self.load_image()
+
             self.timer = QTimer()
             self.timer.timeout.connect(self.load_image)
             self.timer.start(image_load_timer_in_ms)
