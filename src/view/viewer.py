@@ -1,25 +1,31 @@
 import os
 import random
+from collections import defaultdict
 from pathlib import Path
 
 from PySide6.QtCore import QTimer
-from PySide6.QtGui import QPixmap
-from PySide6.QtWidgets import (QHBoxLayout, QLabel, QPushButton, QSizePolicy,
+from PySide6.QtWidgets import (QHBoxLayout, QPushButton, QSizePolicy,
                                QSpacerItem, QVBoxLayout, QWidget)
-from src.view.note import Note
+
+from src.custom_types import NoteType
+from src.view.note import Note, map_note_type
 
 
 class Viewer(QWidget):
-    def __init__(self, images_dir: Path, image_load_timer_in_ms: int | None = None):
+    def __init__(
+        self,
+        images_dir: Path,
+        training_notes: list[NoteType] | None = None,
+        image_load_timer_in_ms: int | None = None,
+    ):
         self.images_dir = images_dir
+        self.training_notes = training_notes
         self.image_load_timer_in_ms = image_load_timer_in_ms
 
         super().__init__()
         self.setWindowTitle("Training")
 
         self.root_layout = vbox = QVBoxLayout()
-        #self.image_label = QLabel()
-        #vbox.addWidget(self.image_label)
         self.setLayout(vbox)
 
         if self.image_load_timer_in_ms is not None:
@@ -40,17 +46,35 @@ class Viewer(QWidget):
             vbox.addLayout(hbox)
 
         self.current_note = None
-        self.image_names = [
-            image_name
+
+        images_paths = [
+            Path(image_name)
             for image_name in os.listdir(self.images_dir)
             if not image_name.startswith("_")
         ]
+        images = {map_note_type(image_path): image_path for image_path in images_paths}
+        self.image_paths = [
+            self.images_dir / value
+            for key, value in images.items()
+            if self.training_notes is None or key in self.training_notes
+        ]
+
+        self._reorder_image_paths()
 
         self.load_image()
 
+    def _reorder_image_paths(self):
+        self._next_image_iteration = 0
+        random.shuffle(self.image_paths)
+        self.next_image_iter = iter(self.image_paths)
+
     def next_image(self) -> Path:
-        image_file = random.choice(self.image_names)
-        return self.images_dir / image_file
+        self._next_image_iteration += 1
+
+        if self._next_image_iteration >= len(self.image_paths):
+            self._reorder_image_paths()
+
+        return next(self.next_image_iter)
 
     def load_image(self):
         next_note = Note(self.next_image())
@@ -63,5 +87,5 @@ class Viewer(QWidget):
             self.current_note = next_note
             self.root_layout.addWidget(self.current_note)
 
-        self.update()
-
+    def closeEvent(self, event):
+        event.accept()

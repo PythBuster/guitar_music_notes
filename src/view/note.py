@@ -1,8 +1,10 @@
 from pathlib import Path
 
 from PySide6.QtGui import QPixmap
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel
+from PySide6.QtWidgets import QLabel, QVBoxLayout, QWidget
+
 from src.custom_types import NoteType
+
 
 def map_note_type(image_path: Path) -> NoteType:
     image_name = image_path.name.split(".")[0]
@@ -12,6 +14,7 @@ def map_note_type(image_path: Path) -> NoteType:
 
     print("Note:", image_name, flush=True)
     return NoteType(image_name)
+
 
 class Note(QWidget):
     def __init__(self, image_path: Path):
@@ -31,4 +34,3 @@ class Note(QWidget):
     @property
     def name(self) -> str:
         return str(self.note_type)
-
