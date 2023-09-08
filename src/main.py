@@ -9,7 +9,7 @@ app = QApplication(sys.argv)
 
 viewer = Viewer(
     images_dir=IMAGES_PATH,
-    image_load_timer_in_ms=LOAD_IMAGE_TIMER_IN_MS,
+    # image_load_timer_in_ms=LOAD_IMAGE_TIMER_IN_MS,
 )
 
 viewer.show()
