@@ -15,7 +15,7 @@ class Viewer(QWidget):
     def __init__(
         self,
         images_dir: Path,
-        training_notes: list[NoteType] | None = None,
+        training_notes: set[NoteType] | None = None,
         image_load_timer_in_ms: int | None = None,
     ):
         self.images_dir = images_dir

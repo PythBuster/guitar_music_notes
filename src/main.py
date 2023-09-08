@@ -11,7 +11,7 @@ app = QApplication(sys.argv)
 viewer = Viewer(
     images_dir=IMAGES_PATH,
     image_load_timer_in_ms=LOAD_IMAGE_TIMER_IN_MS,
-    training_notes=[
+    training_notes={
         NoteType.E,
         NoteType.G,
         NoteType.A,
@@ -22,9 +22,9 @@ viewer = Viewer(
         NoteType.g,
         NoteType.a,
         NoteType.h,
-        NoteType.c,
-        NoteType.e,
-    ],
+        NoteType.c_,
+        NoteType.e_,
+    },
 )
 
 viewer.show()
