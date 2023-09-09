@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "guitar-music-notes"
+name = "Guitar Music Notes"
 version = "1.2.0"
 description = ""
 authors = ["'PythBuster' <'pythbuster@gmail.com'>"]
@@ -10,6 +10,7 @@ packages = [{include = "guitar_music_notes"}]
 python = ">=3.11,<3.12"
 pyside6 = "^6.5.2"
 pygame = "^2.5.1"
+toml = "^0.10.2"
 
 
 [tool.poetry.group.dev.dependencies]

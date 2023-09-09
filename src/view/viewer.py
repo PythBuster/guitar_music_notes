@@ -56,15 +56,17 @@ class Viewer(QWidget, Ui_Viewer):
         self.setFixedSize(self.sizeHint())
 
     def _reorder_image_paths(self):
+        print("Shuffle notes...", flush=True)
+
         self._next_image_iteration = 0
         random.shuffle(self.image_paths)
         self.next_image_iter = iter(self.image_paths)
 
     def next_image(self) -> Path:
-        self._next_image_iteration += 1
-
         if self._next_image_iteration >= len(self.image_paths):
             self._reorder_image_paths()
+
+        self._next_image_iteration += 1
 
         return next(self.next_image_iter)
 
@@ -79,4 +81,5 @@ class Viewer(QWidget, Ui_Viewer):
         self.current_note.play_sound()
 
     def closeEvent(self, event):
+        self.timer.stop()
         event.accept()

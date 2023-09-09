@@ -1,38 +1,25 @@
 import sys
+from typing import Any
 
 import pygame
+import toml
 from PySide6.QtWidgets import QApplication
 
-from src.config import IMAGES_PATH, LOAD_IMAGE_TIMER_IN_MS, SOUNDS_DIR
-from src.custom_types import NoteType
-from src.view.viewer import Viewer
+from src.config import PYPROJECT_PATH
+from src.view.main_window import MainWindow
 
 pygame.mixer.init()  # initialise the pygame
 
 
+def read_pyproject_toml() -> dict[str, Any]:
+    return toml.load(PYPROJECT_PATH.open())
+
+
+pyproject_data = read_pyproject_toml()
+
 app = QApplication(sys.argv)
 
-viewer = Viewer(
-    images_dir=IMAGES_PATH,
-    sounds_dir=SOUNDS_DIR,
-    # image_load_timer_in_ms=LOAD_IMAGE_TIMER_IN_MS,
-    training_notes={
-        NoteType.NOTE_E,
-        NoteType.NOTE_G,
-        NoteType.NOTE_A,
-        NoteType.NOTE_H,
-        NoteType.NOTE_c,
-        NoteType.NOTE_d,
-        NoteType.NOTE_e,
-        NoteType.NOTE_g,
-        NoteType.NOTE_a,
-        NoteType.NOTE_h,
-        NoteType.NOTE_c_,
-        NoteType.NOTE_e_,
-        NoteType.NOTE_f_,
-    },
-)
-
-viewer.show()
+main_window = MainWindow(app_data=pyproject_data["tool"]["poetry"])
+main_window.show()
 
 app.exec()
