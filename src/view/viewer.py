@@ -1,15 +1,12 @@
-import concurrent
 import os
 import random
 import threading
-from collections import defaultdict
 from pathlib import Path
 
-from PySide6.QtCore import QTimer, QUrl
-from PySide6.QtMultimedia import QMediaPlayer, QAudioOutput, QSoundEffect
+import pygame
+from PySide6.QtCore import QTimer
 from PySide6.QtWidgets import (QHBoxLayout, QPushButton, QSizePolicy,
                                QSpacerItem, QVBoxLayout, QWidget)
-from playsound import playsound
 
 from src.custom_types import NoteType
 from src.view.note import Note, map_note_type
@@ -94,13 +91,17 @@ class Viewer(QWidget):
             self.root_layout.addWidget(self.current_note)
 
         self.update()
-        self.play_sound(next_note.orig_filename)
+        self.play_sound(next_note.name)
 
     def play_sound(self, file_name: str):
         sound_path = self.sounds_dir / f"{file_name}.mp3"
 
+        def play():
+            pygame.mixer.music.load(sound_path)
+            pygame.mixer.music.play(loops=0)
+
         try:
-            threading.Thread(target=playsound, args=(sound_path,), daemon=True).start()
+            threading.Thread(target=play, daemon=True).start()
         except Exception as ex:
             print("Sound not found:", sound_path, flush=True)
         else:
