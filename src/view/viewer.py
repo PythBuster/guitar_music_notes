@@ -1,9 +1,7 @@
 import os
 import random
-import threading
 from pathlib import Path
 
-import pygame
 from PySide6.QtCore import QTimer
 from PySide6.QtWidgets import (QHBoxLayout, QPushButton, QSizePolicy,
                                QSpacerItem, QVBoxLayout, QWidget)
@@ -80,7 +78,10 @@ class Viewer(QWidget):
         return next(self.next_image_iter)
 
     def load_image(self):
-        next_note = Note(self.next_image())
+        next_note = Note(
+            image_path=self.next_image(),
+            sound_path=self.sounds_dir,
+        )
 
         if self.current_note is None:
             self.current_note = next_note
@@ -91,21 +92,7 @@ class Viewer(QWidget):
             self.root_layout.addWidget(self.current_note)
 
         self.update()
-        self.play_sound(next_note.name)
-
-    def play_sound(self, file_name: str):
-        sound_path = self.sounds_dir / f"{file_name}.mp3"
-
-        def play():
-            pygame.mixer.music.load(sound_path)
-            pygame.mixer.music.play(loops=0)
-
-        try:
-            threading.Thread(target=play, daemon=True).start()
-        except Exception as ex:
-            print("Sound not found:", sound_path, flush=True)
-        else:
-            print("Play Sound:", sound_path, flush=True)
+        next_note.play_sound()
 
     def closeEvent(self, event):
         event.accept()

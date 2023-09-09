@@ -5,4 +5,4 @@ SOUNDS_DIR = (
     Path(__file__).absolute().resolve().parent.parent / "sounds" / "classical_guitar"
 )
 
-LOAD_IMAGE_TIMER_IN_MS = 3000
+LOAD_IMAGE_TIMER_IN_MS = 4000
