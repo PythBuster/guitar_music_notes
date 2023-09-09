@@ -1,11 +1,15 @@
+import concurrent
 import os
 import random
+import threading
 from collections import defaultdict
 from pathlib import Path
 
-from PySide6.QtCore import QTimer
+from PySide6.QtCore import QTimer, QUrl
+from PySide6.QtMultimedia import QMediaPlayer, QAudioOutput, QSoundEffect
 from PySide6.QtWidgets import (QHBoxLayout, QPushButton, QSizePolicy,
                                QSpacerItem, QVBoxLayout, QWidget)
+from playsound import playsound
 
 from src.custom_types import NoteType
 from src.view.note import Note, map_note_type
@@ -15,10 +19,12 @@ class Viewer(QWidget):
     def __init__(
         self,
         images_dir: Path,
+        sounds_dir: Path,
         training_notes: set[NoteType] | None = None,
         image_load_timer_in_ms: int | None = None,
     ):
         self.images_dir = images_dir
+        self.sounds_dir = sounds_dir
         self.training_notes = training_notes
         self.image_load_timer_in_ms = image_load_timer_in_ms
 
@@ -86,6 +92,19 @@ class Viewer(QWidget):
             self.root_layout.removeWidget(self.current_note)
             self.current_note = next_note
             self.root_layout.addWidget(self.current_note)
+
+        self.update()
+        self.play_sound(next_note.orig_filename)
+
+    def play_sound(self, file_name: str):
+        sound_path = self.sounds_dir / f"{file_name}.mp3"
+
+        try:
+            threading.Thread(target=playsound, args=(sound_path,), daemon=True).start()
+        except Exception as ex:
+            print("Sound not found:", sound_path, flush=True)
+        else:
+            print("Play Sound:", sound_path, flush=True)
 
     def closeEvent(self, event):
         event.accept()

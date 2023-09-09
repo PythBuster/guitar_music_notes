@@ -21,6 +21,7 @@ class Note(QWidget):
         super().__init__()
         self.image_label = QLabel()
 
+        self.orig_filename = image_path.name.replace(".png", "")
         self.note_type = map_note_type(image_path=image_path)
         self.image_path = image_path
 
