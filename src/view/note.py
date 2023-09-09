@@ -14,7 +14,6 @@ def map_note_type(image_path: Path) -> NoteType:
     if image_name.startswith("'"):  # ''f
         image_name = image_name[::-2].upper()
 
-    print("Note:", image_name, flush=True)
     return NoteType(image_name)
 
 
