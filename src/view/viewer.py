@@ -3,14 +3,14 @@ import random
 from pathlib import Path
 
 from PySide6.QtCore import QTimer
-from PySide6.QtWidgets import (QHBoxLayout, QPushButton, QSizePolicy,
-                               QSpacerItem, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import QWidget
 
 from src.custom_types import NoteType
 from src.view.note import Note
+from src.view.ui.ui_viewer import Ui_Viewer
 
 
-class Viewer(QWidget):
+class Viewer(QWidget, Ui_Viewer):
     def __init__(
         self,
         images_dir: Path,
@@ -18,33 +18,23 @@ class Viewer(QWidget):
         training_notes: set[NoteType] | None = None,
         image_load_timer_in_ms: int | None = None,
     ):
+        super().__init__()
+        self.setupUi(self)
+
         self.images_dir = images_dir
         self.sounds_dir = sounds_dir
         self.training_notes = training_notes
         self.image_load_timer_in_ms = image_load_timer_in_ms
 
-        super().__init__()
-        self.setWindowTitle("Training")
-
-        self.root_layout = vbox = QVBoxLayout()
-        self.setLayout(vbox)
-
         if self.image_load_timer_in_ms is not None:
+            self.pushButton_next.setVisible(False)
+
             self.timer = QTimer()
             self.timer.timeout.connect(self.load_image)
             self.timer.start(image_load_timer_in_ms)
         else:
-            self.next_button = QPushButton()
-            self.next_button.setText("Next")
-            self.next_button.clicked.connect(self.load_image)
-
-            hbox = QHBoxLayout()
-            spacer = QSpacerItem(0, 0)
-            spacer.changeSize(5, 5, QSizePolicy.Expanding, QSizePolicy.Expanding)
-
-            hbox.addItem(spacer)
-            hbox.addWidget(self.next_button)
-            vbox.addLayout(hbox)
+            self.pushButton_next.setVisible(True)
+            self.pushButton_next.clicked.connect(self.load_image)
 
         self.current_note = None
 
@@ -63,6 +53,7 @@ class Viewer(QWidget):
         self._reorder_image_paths()
 
         self.load_image()
+        self.setFixedSize(self.sizeHint())
 
     def _reorder_image_paths(self):
         self._next_image_iteration = 0
@@ -78,21 +69,14 @@ class Viewer(QWidget):
         return next(self.next_image_iter)
 
     def load_image(self):
-        next_note = Note(
+        self.current_note = Note(
             image_path=self.next_image(),
             sound_path=self.sounds_dir,
+            image_label=self.label_image,
         )
 
-        if self.current_note is None:
-            self.current_note = next_note
-            self.root_layout.addWidget(self.current_note)
-        else:
-            self.root_layout.removeWidget(self.current_note)
-            self.current_note = next_note
-            self.root_layout.addWidget(self.current_note)
-
         self.update()
-        next_note.play_sound()
+        self.current_note.play_sound()
 
     def closeEvent(self, event):
         event.accept()
