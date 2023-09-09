@@ -2,11 +2,11 @@ from enum import StrEnum
 
 
 class NoteType(StrEnum):
-    E = "E"
-    F = "F"
-    G = "G"
-    A = "A"
-    H = "H"
+    E = "'e"
+    F = "'f"
+    G = "'g"
+    A = "'a"
+    H = "'h"
     c = "c"
     d = "d"
     e = "e"

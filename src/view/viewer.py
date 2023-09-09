@@ -7,7 +7,7 @@ from PySide6.QtWidgets import (QHBoxLayout, QPushButton, QSizePolicy,
                                QSpacerItem, QVBoxLayout, QWidget)
 
 from src.custom_types import NoteType
-from src.view.note import Note, map_note_type
+from src.view.note import Note
 
 
 class Viewer(QWidget):
@@ -49,13 +49,13 @@ class Viewer(QWidget):
         self.current_note = None
 
         images_paths = [
-            Path(image_name)
+            self.images_dir / image_name
             for image_name in os.listdir(self.images_dir)
             if not image_name.startswith("_")
         ]
-        images = {map_note_type(image_path): image_path for image_path in images_paths}
+        images = {NoteType(image_path.stem): image_path for image_path in images_paths}
         self.image_paths = [
-            self.images_dir / value
+            value
             for key, value in images.items()
             if self.training_notes is None or key in self.training_notes
         ]
