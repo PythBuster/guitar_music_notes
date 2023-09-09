@@ -284,7 +284,7 @@
         </widget>
        </item>
        <item row="10" column="0">
-        <widget class="QCheckBox" name="note___ais">
+        <widget class="QCheckBox" name="note__ais">
          <property name="text">
           <string># A</string>
          </property>
@@ -764,6 +764,75 @@
    </property>
   </action>
  </widget>
+ <tabstops>
+  <tabstop>radioButton_timer</tabstop>
+  <tabstop>radioButton_manually</tabstop>
+  <tabstop>lineEdit_timer_seconds</tabstop>
+  <tabstop>note__e</tabstop>
+  <tabstop>note__f</tabstop>
+  <tabstop>note__fis</tabstop>
+  <tabstop>note__ges</tabstop>
+  <tabstop>note__g</tabstop>
+  <tabstop>note__gis</tabstop>
+  <tabstop>note__as</tabstop>
+  <tabstop>note__a</tabstop>
+  <tabstop>note__ais</tabstop>
+  <tabstop>note__b</tabstop>
+  <tabstop>note__h</tabstop>
+  <tabstop>note_c</tabstop>
+  <tabstop>note_cis</tabstop>
+  <tabstop>note_des</tabstop>
+  <tabstop>note_d</tabstop>
+  <tabstop>note_dis</tabstop>
+  <tabstop>note_es</tabstop>
+  <tabstop>note_e</tabstop>
+  <tabstop>note_f</tabstop>
+  <tabstop>note_fis</tabstop>
+  <tabstop>note_ges</tabstop>
+  <tabstop>note_g</tabstop>
+  <tabstop>note_gis</tabstop>
+  <tabstop>note_as</tabstop>
+  <tabstop>note_a</tabstop>
+  <tabstop>note_ais</tabstop>
+  <tabstop>note_b</tabstop>
+  <tabstop>note_h</tabstop>
+  <tabstop>note_c_</tabstop>
+  <tabstop>note_cis_</tabstop>
+  <tabstop>note_des_</tabstop>
+  <tabstop>note_d_</tabstop>
+  <tabstop>note_dis_</tabstop>
+  <tabstop>note_es_</tabstop>
+  <tabstop>note_e_</tabstop>
+  <tabstop>note_f_</tabstop>
+  <tabstop>note_fis_</tabstop>
+  <tabstop>note_ges_</tabstop>
+  <tabstop>note_g_</tabstop>
+  <tabstop>note_gis_</tabstop>
+  <tabstop>note_as_</tabstop>
+  <tabstop>note_a_</tabstop>
+  <tabstop>note_ais_</tabstop>
+  <tabstop>note_b_</tabstop>
+  <tabstop>note_h_</tabstop>
+  <tabstop>note_c__</tabstop>
+  <tabstop>note_cis__</tabstop>
+  <tabstop>note_des__</tabstop>
+  <tabstop>note_d__</tabstop>
+  <tabstop>note_dis__</tabstop>
+  <tabstop>note_es__</tabstop>
+  <tabstop>note_e__</tabstop>
+  <tabstop>note_f__</tabstop>
+  <tabstop>note_fis__</tabstop>
+  <tabstop>note_ges__</tabstop>
+  <tabstop>note_g__</tabstop>
+  <tabstop>note_gis__</tabstop>
+  <tabstop>note_as__</tabstop>
+  <tabstop>note_a__</tabstop>
+  <tabstop>note_ais__</tabstop>
+  <tabstop>note_b__</tabstop>
+  <tabstop>note_h__</tabstop>
+  <tabstop>note_c___</tabstop>
+  <tabstop>pushButton_start_training</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>
