@@ -1,6 +1,6 @@
 from typing import Any
 
-from PySide6.QtCore import QSettings, QByteArray
+from PySide6.QtCore import QByteArray, QSettings
 from PySide6.QtWidgets import QCheckBox, QMainWindow, QMessageBox
 
 from src.config import IMAGES_PATH, SOUNDS_DIR
@@ -77,7 +77,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         return selected_notes
 
     def write_settings(self) -> None:
-        settings = QSettings(self.app_data['name'])
+        settings = QSettings(self.app_data["name"])
 
         settings.beginGroup("MainWindow")
 
@@ -93,7 +93,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         settings.endGroup()
 
     def read_settings(self) -> None:
-        settings = QSettings(self.app_data['name'])
+        settings = QSettings(self.app_data["name"])
 
         settings.beginGroup("MainWindow")
 
@@ -102,7 +102,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if not geometry.isEmpty():
             self.restoreGeometry(geometry)
 
-        radioButton_timer_is_checked = settings.value("radioButton_timer", False, type=bool)
+        radioButton_timer_is_checked = settings.value(
+            "radioButton_timer", False, type=bool
+        )
         self.radioButton_timer.setChecked(radioButton_timer_is_checked)
         self.radioButton_manually.setChecked(not radioButton_timer_is_checked)
         self.groupBox_timer_settings.setVisible(radioButton_timer_is_checked)
@@ -123,7 +125,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         ]
 
         for checkbox in checkboxes:
-            checkbox.setChecked(NoteType(checkbox.objectName().replace("note_", "").replace("_", "'")) in selected_note_types)
+            checkbox.setChecked(
+                NoteType(checkbox.objectName().replace("note_", "").replace("_", "'"))
+                in selected_note_types
+            )
 
     def closeEvent(self, event):
         self.write_settings()
