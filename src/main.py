@@ -15,22 +15,22 @@ app = QApplication(sys.argv)
 viewer = Viewer(
     images_dir=IMAGES_PATH,
     sounds_dir=SOUNDS_DIR,
-    image_load_timer_in_ms=LOAD_IMAGE_TIMER_IN_MS,
-    #training_notes={
-    #    NoteType.NOTE_E,
-    #    NoteType.NOTE_G,
-    #    NoteType.NOTE_A,
-    #    NoteType.NOTE_H,
-    #    NoteType.NOTE_c,
-    #    NoteType.NOTE_d,
-    #    NoteType.NOTE_e,
-    #    NoteType.NOTE_g,
-    #    NoteType.NOTE_a,
-    #    NoteType.NOTE_h,
-    #    NoteType.NOTE_c_,
-    #    NoteType.NOTE_e_,
-    #    NoteType.NOTE_f_,
-    #},
+    # image_load_timer_in_ms=LOAD_IMAGE_TIMER_IN_MS,
+    training_notes={
+        NoteType.NOTE_E,
+        NoteType.NOTE_G,
+        NoteType.NOTE_A,
+        NoteType.NOTE_H,
+        NoteType.NOTE_c,
+        NoteType.NOTE_d,
+        NoteType.NOTE_e,
+        NoteType.NOTE_g,
+        NoteType.NOTE_a,
+        NoteType.NOTE_h,
+        NoteType.NOTE_c_,
+        NoteType.NOTE_e_,
+        NoteType.NOTE_f_,
+    },
 )
 
 viewer.show()
