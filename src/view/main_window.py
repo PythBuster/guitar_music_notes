@@ -132,5 +132,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def closeEvent(self, event):
         self.write_settings()
-        self.viewer.close()
+
+        if self.viewer is not None:
+            self.viewer.close()
+
         event.accept()
