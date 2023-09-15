@@ -1,7 +1,11 @@
+"""The place for all custom types."""
+
 from enum import StrEnum
 
 
 class NoteType(StrEnum):
+    """The note types."""
+
     NOTE_E = "'e"
     NOTE_F = "'f"
     NOTE_Fis = "'fis"

@@ -1,15 +1,19 @@
+"""The main window module with all the logic and classes around the main window UI."""
+
 from typing import Any
 
-from PySide6.QtCore import QByteArray, QSettings
+from PySide6.QtCore import QByteArray, QEvent, QSettings
 from PySide6.QtWidgets import QCheckBox, QMainWindow, QMessageBox
 
-from src.config import IMAGES_PATH, SOUNDS_DIR
+from src.config import IMAGES_PATH, SOUNDS_PATH
 from src.custom_types import NoteType
 from src.view.ui.ui_main_window import Ui_MainWindow
 from src.view.viewer import Viewer
 
 
 class MainWindow(QMainWindow, Ui_MainWindow):
+    """The UI class of the mai window."""
+
     def __init__(self, app_data: dict[str, Any]):
         self.app_data = app_data
 
@@ -18,7 +22,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         self.setWindowTitle(f"{app_data['name']} v{app_data['version']}")
 
-        self.viewer = None
+        self.viewer: Viewer | None = None
         self.setFixedSize(self.sizeHint())
 
         # connections
@@ -37,15 +41,20 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.read_settings()
 
     def about_app(self):
+        """Open a about app dialogue."""
+
         about = QMessageBox(self)
         about.setWindowTitle("About")
         about.setText("Guitar Music Notes")
         about.exec()
 
-    def start_training(self):
-        kwargs = {
+    def start_training(self) -> None:
+        """Initialize the Viewer UI instance by reading some options from config.py
+        and shows it."""
+
+        kwargs: dict[str, Any] = {
             "images_dir": IMAGES_PATH,
-            "sounds_dir": SOUNDS_DIR,
+            "sounds_dir": SOUNDS_PATH,
         }
 
         if self.radioButton_timer.isChecked():
@@ -53,7 +62,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 int(self.lineEdit_timer_seconds.text()) * 1000
             )
 
-        training_notes = self.collect_selected_notes()
+        training_notes = self._collect_selected_notes()
 
         if training_notes:
             kwargs["training_notes"] = training_notes
@@ -61,7 +70,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.viewer = Viewer(**kwargs)
         self.viewer.show()
 
-    def collect_selected_notes(self) -> set[NoteType]:
+    def _collect_selected_notes(self) -> set[NoteType]:
+        """Collect notes into a set of NoteTypes by checking the
+        note checkboxes in the viewer UI.
+
+        :return: Return the collected set of NoteTypes.
+        :rtype: set[NoteType]
+        """
+
         selected_checkboxes = [
             child
             for child in self.groupBox_select_notes.children()
@@ -77,6 +93,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         return selected_notes
 
     def write_settings(self) -> None:
+        """Persist the current state in the ui (like selected notes, training modes,
+        ui position etc.) in user settings."""
+
         settings = QSettings(self.app_data["name"])
 
         settings.beginGroup("MainWindow")
@@ -87,12 +106,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         settings.setValue("radioButton_timer", radioButton_timer_is_checked)
         settings.setValue("lineEdit_timer_seconds", self.lineEdit_timer_seconds.text())
 
-        selected_note_types = self.collect_selected_notes()
+        selected_note_types = self._collect_selected_notes()
         settings.setValue("selected_note_types", selected_note_types)
 
         settings.endGroup()
 
     def read_settings(self) -> None:
+        """Read saved user settings and load states in the ui (like selected notes,
+        training modes, ui position etc.)."""
+
         settings = QSettings(self.app_data["name"])
 
         settings.beginGroup("MainWindow")
@@ -113,11 +135,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.lineEdit_timer_seconds.setText(lineEdit_timer_seconds)
 
         selected_note_types = settings.value("selected_note_types", set())
-        self.select_notes(selected_note_types=selected_note_types)
+        self._check_notes_in_viewer(selected_note_types=selected_note_types)
 
         settings.endGroup()
 
-    def select_notes(self, selected_note_types: set[NoteType]) -> None:
+    def _check_notes_in_viewer(self, selected_note_types: set[NoteType]) -> None:
         checkboxes = [
             child
             for child in self.groupBox_select_notes.children()
@@ -130,7 +152,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 in selected_note_types
             )
 
-    def closeEvent(self, event):
+    def closeEvent(self, event: QEvent) -> None:
+        """The overwritten close event.
+
+        Before closing the window, the active timer need to be stopped.
+
+        :param event: The current event.
+        :type event: QEvent
+        """
+
         self.write_settings()
 
         if self.viewer is not None:

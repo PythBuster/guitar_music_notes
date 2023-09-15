@@ -1,3 +1,5 @@
+"""The note module with all the logic and classes around the note UI widget."""
+
 import threading
 from pathlib import Path
 
@@ -9,7 +11,9 @@ from src.custom_types import NoteType
 
 
 class Note(QWidget):
-    def __init__(self, image_path: Path, sound_path: Path, image_label: QLabel):
+    """The UI widget of the note."""
+
+    def __init__(self, image_path: Path, sound_path: Path, image_label: QLabel) -> None:
         self.sound_path = sound_path
 
         super().__init__()
@@ -20,7 +24,9 @@ class Note(QWidget):
         self.qpixmap = QPixmap(image_path)
         self.image_label.setPixmap(self.qpixmap)
 
-    def play_sound(self):
+    def play_sound(self) -> None:
+        """Play the sound of the related note instance (self)."""
+
         sound_path = self.sound_path / f"{self.image_path.stem}.mp3"
 
         def play():
@@ -29,11 +35,7 @@ class Note(QWidget):
 
         try:
             threading.Thread(target=play, daemon=True).start()
-        except Exception as ex:
+        except Exception:
             print("Sound not found:", sound_path, flush=True)
         else:
             print("Play Sound:", sound_path, flush=True)
-
-    @property
-    def name(self) -> str:
-        return str(self.note_type)
