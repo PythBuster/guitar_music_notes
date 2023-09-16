@@ -14,7 +14,7 @@ allow_untyped_calls = true
 
 [tool.poetry]
 name = "Guitar Music Notes"
-version = "2.0.0"
+version = "2.1.0"
 description = ""
 authors = ["'PythBuster' <'pythbuster@gmail.com'>"]
 readme = "README.md"

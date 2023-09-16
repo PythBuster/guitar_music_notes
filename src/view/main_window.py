@@ -67,6 +67,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if training_notes:
             kwargs["training_notes"] = training_notes
 
+        kwargs["follow_with_solution"] = self.checkBox_follow_with_solution.isChecked()
+
         self.viewer = Viewer(**kwargs)
         self.viewer.show()
 
@@ -108,6 +110,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         selected_note_types = self._collect_selected_notes()
         settings.setValue("selected_note_types", selected_note_types)
+        settings.setValue(
+            "checkBox_follow_with_solution",
+            self.checkBox_follow_with_solution.isChecked(),
+        )
 
         settings.endGroup()
 
@@ -134,8 +140,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         lineEdit_timer_seconds = settings.value("lineEdit_timer_seconds", "4")
         self.lineEdit_timer_seconds.setText(lineEdit_timer_seconds)
 
-        selected_note_types = settings.value("selected_note_types", set())
+        selected_note_types = settings.value("selected_note_types", defaultValue=set())
         self._check_notes_in_viewer(selected_note_types=selected_note_types)
+
+        is_checkBox_follow_with_solution_checked = settings.value(
+            "checkBox_follow_with_solution", defaultValue=False, type=bool
+        )
+        self.checkBox_follow_with_solution.setChecked(
+            is_checkBox_follow_with_solution_checked
+        )
 
         settings.endGroup()
 

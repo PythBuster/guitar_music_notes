@@ -18,9 +18,9 @@
     <item>
      <widget class="QGroupBox" name="groupBox_next_note_settings">
       <property name="title">
-       <string>Next Note Seelction</string>
+       <string>Next Note Selection</string>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0">
+      <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0,0">
        <property name="spacing">
         <number>0</number>
        </property>
@@ -191,6 +191,13 @@
            </spacer>
           </item>
          </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="checkBox_follow_with_solution">
+         <property name="text">
+          <string>Show Solution</string>
+         </property>
         </widget>
        </item>
       </layout>

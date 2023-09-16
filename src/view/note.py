@@ -39,3 +39,14 @@ class Note(QWidget):
             print("Sound not found:", sound_path, flush=True)
         else:
             print("Play Sound:", sound_path, flush=True)
+
+    @property
+    def name(self):
+        note_type_str = str(self.note_type)
+        note_name = (
+            note_type_str[1::].upper()
+            if note_type_str.startswith("'")
+            else note_type_str
+        )
+
+        return note_name.replace("'", " '")
