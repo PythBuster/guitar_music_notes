@@ -5,7 +5,7 @@ from typing import Any
 from PySide6.QtCore import QByteArray, QEvent, QSettings
 from PySide6.QtWidgets import QCheckBox, QMainWindow, QMessageBox
 
-from src.config import IMAGES_PATH, SOUNDS_PATH, MAX_TIMER_SEC
+from src.config import IMAGES_PATH, SOUNDS_PATH, MAX_TIMER_IN_SEC
 from src.custom_types import NoteType
 from src.view.ui.ui_main_window import Ui_MainWindow
 from src.view.viewer import Viewer
@@ -51,7 +51,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if digit_only_input:
             int_input = int(digit_only_input)
 
-            if not(0 < int_input <= MAX_TIMER_SEC):
+            if not(0 < int_input <= MAX_TIMER_IN_SEC):
                 not_valid()
                 return
 
