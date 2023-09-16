@@ -5,7 +5,7 @@ from typing import Any
 from PySide6.QtCore import QByteArray, QEvent, QSettings
 from PySide6.QtWidgets import QCheckBox, QMainWindow, QMessageBox
 
-from src.config import IMAGES_PATH, SOUNDS_PATH
+from src.config import IMAGES_PATH, SOUNDS_PATH, MAX_TIMER_SEC
 from src.custom_types import NoteType
 from src.view.ui.ui_main_window import Ui_MainWindow
 from src.view.viewer import Viewer
@@ -26,6 +26,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.setFixedSize(self.sizeHint())
 
         # connections
+        self.lineEdit_timer_seconds.textChanged.connect(self._validate_timer_input)
         self.radioButton_timer.clicked.connect(
             lambda: self.groupBox_timer_settings.setVisible(True)
         )
@@ -39,6 +40,25 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionAbout_Guitar_Music_Notes.triggered.connect(self.about_app)
 
         self.read_settings()
+
+    def _validate_timer_input(self, input: str) -> None:
+        digit_only_input = "".join([ch for ch in input if ch.isdigit()])
+
+        def not_valid():
+            self.lineEdit_timer_seconds.setText(digit_only_input)
+            self.pushButton_start_training.setEnabled(False)
+
+        if digit_only_input:
+            int_input = int(digit_only_input)
+
+            if not(0 < int_input <= MAX_TIMER_SEC):
+                not_valid()
+                return
+
+            self.lineEdit_timer_seconds.setText(str(int_input))
+            self.pushButton_start_training.setEnabled(True)
+        else:
+            not_valid()
 
     def about_app(self):
         """Open a about app dialogue."""

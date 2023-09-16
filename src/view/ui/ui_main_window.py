@@ -9,18 +9,18 @@
 ################################################################################
 
 from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
-                            QMetaObject, QObject, QPoint, QRect, QSize, Qt,
-                            QTime, QUrl)
-from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient, QCursor,
-                           QFont, QFontDatabase, QGradient, QIcon, QImage,
-                           QKeySequence, QLinearGradient, QPainter, QPalette,
-                           QPixmap, QRadialGradient, QTransform)
+    QMetaObject, QObject, QPoint, QRect,
+    QSize, QTime, QUrl, Qt)
+from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
+    QCursor, QFont, QFontDatabase, QGradient,
+    QIcon, QImage, QKeySequence, QLinearGradient,
+    QPainter, QPalette, QPixmap, QRadialGradient,
+    QTransform)
 from PySide6.QtWidgets import (QApplication, QCheckBox, QFrame, QGridLayout,
-                               QGroupBox, QHBoxLayout, QLabel, QLineEdit,
-                               QMainWindow, QMenu, QMenuBar, QPushButton,
-                               QRadioButton, QSizePolicy, QSpacerItem,
-                               QVBoxLayout, QWidget)
-
+    QGroupBox, QHBoxLayout, QLabel, QLineEdit,
+    QMainWindow, QMenu, QMenuBar, QPushButton,
+    QRadioButton, QSizePolicy, QSpacerItem, QVBoxLayout,
+    QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -492,7 +492,8 @@ class Ui_MainWindow(object):
         MainWindow.setMenuBar(self.menubar)
         QWidget.setTabOrder(self.radioButton_timer, self.radioButton_manually)
         QWidget.setTabOrder(self.radioButton_manually, self.lineEdit_timer_seconds)
-        QWidget.setTabOrder(self.lineEdit_timer_seconds, self.note__e)
+        QWidget.setTabOrder(self.lineEdit_timer_seconds, self.checkBox_follow_with_solution)
+        QWidget.setTabOrder(self.checkBox_follow_with_solution, self.note__e)
         QWidget.setTabOrder(self.note__e, self.note__f)
         QWidget.setTabOrder(self.note__f, self.note__fis)
         QWidget.setTabOrder(self.note__fis, self.note__ges)
@@ -580,7 +581,7 @@ class Ui_MainWindow(object):
         self.radioButton_manually.setText(QCoreApplication.translate("MainWindow", u"Next Note manually", None))
         self.groupBox_timer_settings.setTitle("")
         self.lineEdit_timer_seconds.setText(QCoreApplication.translate("MainWindow", u"4", None))
-        self.label_timer_seconds.setText(QCoreApplication.translate("MainWindow", u"seconds", None))
+        self.label_timer_seconds.setText(QCoreApplication.translate("MainWindow", u"seconds <b>(allowed: 1-10 sec)</b>", None))
         self.checkBox_follow_with_solution.setText(QCoreApplication.translate("MainWindow", u"Show Solution", None))
         self.label_selection_hint.setText(QCoreApplication.translate("MainWindow", u"Note: If no note is selected, all notes will be trained!", None))
         self.groupBox_select_notes.setTitle(QCoreApplication.translate("MainWindow", u"Select Notes", None))

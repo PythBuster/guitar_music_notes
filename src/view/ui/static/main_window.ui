@@ -173,7 +173,7 @@
           <item>
            <widget class="QLabel" name="label_timer_seconds">
             <property name="text">
-             <string>seconds</string>
+             <string>seconds &lt;b&gt;(allowed: 1-10 sec)&lt;/b&gt;</string>
             </property>
            </widget>
           </item>
@@ -775,6 +775,7 @@
   <tabstop>radioButton_timer</tabstop>
   <tabstop>radioButton_manually</tabstop>
   <tabstop>lineEdit_timer_seconds</tabstop>
+  <tabstop>checkBox_follow_with_solution</tabstop>
   <tabstop>note__e</tabstop>
   <tabstop>note__f</tabstop>
   <tabstop>note__fis</tabstop>
