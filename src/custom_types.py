@@ -6,6 +6,7 @@ from enum import StrEnum
 class NoteType(StrEnum):
     """The note types."""
 
+    UNKNOWN = "UNKNOWN"
     NOTE_E = "'e"
     NOTE_F = "'f"
     NOTE_Fis = "'fis"

@@ -9,26 +9,26 @@
 ################################################################################
 
 from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
-                            QMetaObject, QObject, QPoint, QRect, QSize, Qt,
-                            QTime, QUrl)
-from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont,
-                           QFontDatabase, QGradient, QIcon, QImage,
-                           QKeySequence, QLinearGradient, QPainter, QPalette,
-                           QPixmap, QRadialGradient, QTransform)
+    QMetaObject, QObject, QPoint, QRect,
+    QSize, QTime, QUrl, Qt)
+from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
+    QFont, QFontDatabase, QGradient, QIcon,
+    QImage, QKeySequence, QLinearGradient, QPainter,
+    QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QFrame, QHBoxLayout, QLabel,
-                               QPushButton, QSizePolicy, QSpacerItem,
-                               QVBoxLayout, QWidget)
-
+    QPushButton, QSizePolicy, QSpacerItem, QVBoxLayout,
+    QWidget)
 
 class Ui_Viewer(object):
     def setupUi(self, Viewer):
         if not Viewer.objectName():
             Viewer.setObjectName(u"Viewer")
         Viewer.resize(428, 447)
-        Viewer.setStyleSheet(u"background-color: white;")
+        Viewer.setStyleSheet(u"")
         self.verticalLayout = QVBoxLayout(Viewer)
         self.verticalLayout.setSpacing(6)
         self.verticalLayout.setObjectName(u"verticalLayout")
+        self.verticalLayout.setContentsMargins(12, 12, 12, 12)
         self.verticalLayout_2 = QVBoxLayout()
         self.verticalLayout_2.setSpacing(0)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
@@ -117,7 +117,9 @@ class Ui_Viewer(object):
 
         self.horizontalLayout.addWidget(self.pushButton_next)
 
+
         self.verticalLayout.addLayout(self.horizontalLayout)
+
 
         self.retranslateUi(Viewer)
 
@@ -131,3 +133,4 @@ class Ui_Viewer(object):
         self.label_image.setText("")
         self.pushButton_next.setText(QCoreApplication.translate("Viewer", u"Next", None))
     # retranslateUi
+

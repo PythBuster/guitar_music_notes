@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>351</width>
-    <height>595</height>
+    <height>612</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -78,6 +78,13 @@
               </property>
               <property name="checked">
                <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="radioButton_mic_detection">
+              <property name="text">
+               <string>Mic Detection</string>
               </property>
              </widget>
             </item>

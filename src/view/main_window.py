@@ -5,7 +5,7 @@ from typing import Any
 from PySide6.QtCore import QByteArray, QEvent, QSettings
 from PySide6.QtWidgets import QCheckBox, QMainWindow, QMessageBox
 
-from src.config import IMAGES_PATH, SOUNDS_PATH, MAX_TIMER_IN_SEC
+from src.config import IMAGES_PATH, MAX_TIMER_IN_SEC, SOUNDS_PATH
 from src.custom_types import NoteType
 from src.view.ui.ui_main_window import Ui_MainWindow
 from src.view.viewer import Viewer
@@ -30,6 +30,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.radioButton_timer.clicked.connect(
             lambda: self.groupBox_timer_settings.setVisible(True)
         )
+        self.radioButton_mic_detection.clicked.connect(
+            lambda: self.groupBox_timer_settings.setVisible(False)
+        )
         self.radioButton_manually.clicked.connect(
             lambda: self.groupBox_timer_settings.setVisible(False)
         )
@@ -51,7 +54,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if digit_only_input:
             int_input = int(digit_only_input)
 
-            if not(0 < int_input <= MAX_TIMER_IN_SEC):
+            if not (0 < int_input <= MAX_TIMER_IN_SEC):
                 not_valid()
                 return
 
@@ -81,6 +84,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             kwargs["image_load_timer_in_ms"] = (
                 int(self.lineEdit_timer_seconds.text()) * 1000
             )
+
+        kwargs["via_mic_detection"] = self.radioButton_mic_detection.isChecked()
 
         training_notes = self._collect_selected_notes()
 
@@ -124,8 +129,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         settings.setValue("geometry", self.saveGeometry())
 
-        radioButton_timer_is_checked = self.radioButton_timer.isChecked()
-        settings.setValue("radioButton_timer", radioButton_timer_is_checked)
+        if self.radioButton_timer.isChecked():
+            radio_button_index = 1
+        elif self.radioButton_mic_detection.isChecked():
+            radio_button_index = 2
+        else:
+            radio_button_index = 3
+
+        settings.setValue("radio_button_index", radio_button_index)
+
         settings.setValue("lineEdit_timer_seconds", self.lineEdit_timer_seconds.text())
 
         selected_note_types = self._collect_selected_notes()
@@ -150,12 +162,19 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if not geometry.isEmpty():
             self.restoreGeometry(geometry)
 
-        radioButton_timer_is_checked = settings.value(
-            "radioButton_timer", False, type=bool
+        radio_button_index = settings.value("radio_button_index", defaultValue=1, type=int)
+
+        if radio_button_index == 1:
+            self.radioButton_timer.setChecked(True)
+        elif radio_button_index == 2:
+            self.radioButton_mic_detection.setChecked(True)
+        else:
+            self.radioButton_manually.setChecked(True)
+
+        radioButton_timer_is_checked = self.radioButton_timer.isChecked()
+        self.groupBox_timer_settings.setVisible(
+            radioButton_timer_is_checked
         )
-        self.radioButton_timer.setChecked(radioButton_timer_is_checked)
-        self.radioButton_manually.setChecked(not radioButton_timer_is_checked)
-        self.groupBox_timer_settings.setVisible(radioButton_timer_is_checked)
 
         lineEdit_timer_seconds = settings.value("lineEdit_timer_seconds", "4")
         self.lineEdit_timer_seconds.setText(lineEdit_timer_seconds)

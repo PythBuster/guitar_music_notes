@@ -26,7 +26,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(351, 595)
+        MainWindow.resize(351, 612)
         self.action_Close = QAction(MainWindow)
         self.action_Close.setObjectName(u"action_Close")
         self.actionAbout_Qt = QAction(MainWindow)
@@ -63,6 +63,11 @@ class Ui_MainWindow(object):
         self.radioButton_timer.setChecked(True)
 
         self.horizontalLayout_3.addWidget(self.radioButton_timer)
+
+        self.radioButton_mic_detection = QRadioButton(self.groupBox_next_note_raido_buttons)
+        self.radioButton_mic_detection.setObjectName(u"radioButton_mic_detection")
+
+        self.horizontalLayout_3.addWidget(self.radioButton_mic_detection)
 
         self.radioButton_manually = QRadioButton(self.groupBox_next_note_raido_buttons)
         self.radioButton_manually.setObjectName(u"radioButton_manually")
@@ -578,6 +583,7 @@ class Ui_MainWindow(object):
         self.groupBox_next_note_settings.setTitle(QCoreApplication.translate("MainWindow", u"Next Note Selection", None))
         self.groupBox_next_note_raido_buttons.setTitle("")
         self.radioButton_timer.setText(QCoreApplication.translate("MainWindow", u"Timer", None))
+        self.radioButton_mic_detection.setText(QCoreApplication.translate("MainWindow", u"Mic Detection", None))
         self.radioButton_manually.setText(QCoreApplication.translate("MainWindow", u"Next Note manually", None))
         self.groupBox_timer_settings.setTitle("")
         self.lineEdit_timer_seconds.setText(QCoreApplication.translate("MainWindow", u"4", None))
